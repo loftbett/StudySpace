@@ -36,7 +36,7 @@ export default function Home() {
                     objectFit="contain" // 画像のアスペクト比を維持して表示
                     alt="実績管理"
                 />
-                <StyledLink href="/achivement">実績管理</StyledLink>
+                <StyledLink href="/achivements">実績管理</StyledLink>
             </main>
         </div>
     );

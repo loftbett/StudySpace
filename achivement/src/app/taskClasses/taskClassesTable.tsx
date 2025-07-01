@@ -3,9 +3,24 @@ interface TaskClass {
     task_class_name: string | null;
 }
 
-async function getAllTaskClass(): Promise<TaskClass[]> {
+interface TaskClassesTableProps {
+    task_class_no: string | null;
+    task_class_name: string | null;
+}
+
+async function getAllTaskClass(
+    taskClassNo: string | null
+): Promise<TaskClass[]> {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const res = await fetch(`${baseUrl}/api/taskClasses`, {
+    let query;
+    if (taskClassNo) {
+        query = `?`;
+    }
+    query += taskClassNo
+        ? `task_class_no=${encodeURIComponent(taskClassNo)}`
+        : "";
+
+    const res = await fetch(`${baseUrl}/api/taskClasses${query}`, {
         cache: "no-store", // 開発中はキャッシュを無効化
     });
 
@@ -16,16 +31,17 @@ async function getAllTaskClass(): Promise<TaskClass[]> {
     }
     return res.json();
 }
-
-export default async function TaskClassPage() {
+export default async function TaskClassesTable({
+    task_class_no,
+}: TaskClassesTableProps) {
     let taskClasses: TaskClass[] = [];
     let error: string | null = null;
 
     try {
-        taskClasses = await getAllTaskClass();
+        taskClasses = await getAllTaskClass(task_class_no);
     } catch (err) {
-        error = err instanceof Error ? err.message : "Unknown error occurred.";
-        console.error("Error fetching task_class");
+        error = err instanceof Error ? err.message : "Unknown error";
+        console.error("Error fetching taskClasses in table component:", err);
     }
 
     return (

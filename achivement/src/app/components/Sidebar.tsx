@@ -35,10 +35,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                             </li>
                             <li className="mb-4">
                                 <StyledLink
-                                    href="/achivement"
+                                    href="/achivements"
                                     className="block text-lg hover:text-blue-400 onClick={onClose}"
                                 >
                                     実績管理
+                                </StyledLink>
+                            </li>
+                            <li className="mb-4">
+                                <StyledLink
+                                    href="/taskClasses"
+                                    className="block text-lg hover:text-blue-400 onClick={onClose}"
+                                >
+                                    実績管理-タスククラス
                                 </StyledLink>
                             </li>
                             <li className="mb-4">
