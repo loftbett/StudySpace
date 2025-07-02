@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import SearchForm from "../components/SearchForm";
+import SearchForm from "../../components/SearchForm";
 
 interface TaskClassPagesProps {
     searchParams?: {
