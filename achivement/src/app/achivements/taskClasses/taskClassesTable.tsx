@@ -11,7 +11,7 @@ async function getAllTaskClass(
     taskClassNo: string | null
 ): Promise<TaskClass[]> {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    let query;
+    let query = "";
     if (taskClassNo) {
         query = `?`;
     }

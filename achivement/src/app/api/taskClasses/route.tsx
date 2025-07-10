@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     try {
         // パラメータ取得
         const searchParams = request.nextUrl.searchParams;
-        console.log("TEST");
+
         const task_class_no = searchParams.get("task_class_no");
         const task_class_name = searchParams.get("task_class_name");
 
