@@ -1,11 +1,10 @@
 interface TaskClass {
     task_class_no: number;
-    task_class_name: string | null;
+    task_class_name: string;
 }
 
 interface TaskClassesTableProps {
     task_class_no: string | null;
-    task_class_name: string | null;
 }
 
 async function getAllTaskClass(

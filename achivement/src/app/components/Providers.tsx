@@ -33,7 +33,7 @@ const Providers: React.FC<ProviderProps> = ({ children }) => {
             {/* メインコンテンツ */}
             <main
                 className={clsx(
-                    "flex-grow p-8 transition-all duration-300 ease-in-out",
+                    "flex-grow p-1",
                     // large screenでサイドバーを開いている場合
                     "lg:ml-64",
                     //サイドバーが開いているときにコンテンツに重ならないように調整

@@ -15,10 +15,8 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialTaskClassNo }) => {
     // URLのtaskClassNoパラメータが変更された場合に、入力フィールドを更新
     useEffect(() => {
         const currentTaskClassNo = searchParams.get("task_class_no") || "";
-        if (currentTaskClassNo !== taskClassNo) {
-            setTaskClassNo(currentTaskClassNo);
-        }
-    }, [searchParams, taskClassNo]); // searchParamが変更されたときに実行
+        setTaskClassNo(currentTaskClassNo);
+    }, [searchParams]); // searchParamが変更されたときに実行
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -59,7 +57,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialTaskClassNo }) => {
                     id="taskClassNo"
                     value={taskClassNo}
                     onChange={(e) => setTaskClassNo(e.target.value)}
-                    placeholder="例: ECサイト"
+                    placeholder="例: 123（空のまま検索で全件表示）"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
             </div>
