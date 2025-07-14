@@ -44,8 +44,7 @@ export default async function TaskClassesTable({
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6">タスククラス</h1>
+        <>
             {error && (
                 <div
                     className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
@@ -58,7 +57,7 @@ export default async function TaskClassesTable({
             {taskClasses.length === 0 && !error ? (
                 <p className="text-gray-600">実績データがありません。</p>
             ) : (
-                <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+                <div className="mt-6 overflow-x-auto overflow-y-auto max-h-[70vh] bg-white shadow-md rounded-lg">
                     <table className="min-w-full leading-normal">
                         <thead>
                             <tr>
@@ -89,6 +88,6 @@ export default async function TaskClassesTable({
                     </table>
                 </div>
             )}
-        </div>
+        </>
     );
 }

@@ -43,11 +43,11 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialTaskClassNo }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="mb-6 p-4 bg-gray-50 rounded-lg shadow-sm flex flex-col sm:flex-row items-center gap-4"
+            className="mb-6 p-4 bg-gray-50 rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-end gap-4"
         >
             <div className="flex-grow w-full sm:w-auto">
                 <label
-                    htmlFor="projectName"
+                    htmlFor="taskClassNo"
                     className="block text-sm font-medium text-gray-700 mb-1"
                 >
                     タスククラスNoで検索:
