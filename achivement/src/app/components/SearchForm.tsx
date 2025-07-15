@@ -50,7 +50,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialTaskClassNo }) => {
                     htmlFor="taskClassNo"
                     className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                    タスククラスNoで検索:
+                    タスク分類No:
                 </label>
                 <input
                     type="text"

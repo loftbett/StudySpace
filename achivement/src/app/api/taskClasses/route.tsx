@@ -5,7 +5,7 @@ import postgres from "postgres";
 //const sql = postgres(process.env.DATABASE_URL_LOCAL!, { ssl: "require" });
 const sql = postgres(process.env.DATABASE_URL_LOCAL!);
 
-// データ取得
+// 取得
 export async function GET(request: NextRequest) {
     try {
         // パラメータ取得
@@ -39,5 +39,40 @@ export async function GET(request: NextRequest) {
             { message: "Internal Server Error" },
             { status: 500 }
         );
+    }
+}
+
+// 新規登録
+export async function POST(request: NextRequest) {
+    try {
+        // パラメータ取得
+        const searchParams=request.nextUrl.searchParams;
+        
+        const task_class_no = searchParams.get("task_class_no");
+        const task_class_name = searchParams.get("task_class_name");
+
+        let resData;
+        if(task_class_no && task_class_name) {
+            // 入力情報不正エラー
+            console.error("パラメータエラー");
+            return NextResponse.json(
+                { message: "タスク分類Noかタスク分類名が指定されていません。" },
+                { status: 400 }
+            );
+        }
+
+        // DB登録
+        resData = await sql`INSERT INTO task_class (task_class_no,task_class_name)
+        VALUES (${task_class_no},${task_class_name})
+        RETURNING *`;
+
+        return NextResponse.json(resData);
+    } catch (error) {
+        console.error("Failed to fetch taskClass:", error);
+        return NextResponse.json(
+            { message: "Internal Server Error" },
+            { status: 500 });
+        
+        
     }
 }
