@@ -19,16 +19,18 @@ export async function GET(request: NextRequest) {
             // クラスNo指定の場合は、該当のデータを取得
             data =
                 await sql`SELECT task_class_no,task_class_name FROM task_class
-            WHERE task_class_no = ${task_class_no}`;
+            WHERE task_class_no = ${task_class_no}
+            ORDER BY task_class_no`;
         } else if (task_class_name) {
             // クラス名指定の場合は、LIKE検索
             data =
                 await sql`SELECT task_class_no,task_class_name FROM task_class
-            WHERE task_class_name LIKE ${"%" + task_class_name + "%"} `;
+            WHERE task_class_name LIKE ${"%" + task_class_name + "%"} 
+            ORDER BY task_class_no`;
         } else {
             // テーブルからデータを全件取得
             data =
-                await sql`SELECT task_class_no,task_class_name FROM task_class`;
+                await sql`SELECT task_class_no,task_class_name FROM task_class ORDER BY task_class_no`;
         }
 
         console.log(data);
@@ -46,13 +48,12 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         // パラメータ取得
-        const searchParams=request.nextUrl.searchParams;
-        
-        const task_class_no = searchParams.get("task_class_no");
-        const task_class_name = searchParams.get("task_class_name");
+        const data = await request.json();
 
-        let resData;
-        if(task_class_no && task_class_name) {
+        const task_class_no = data.task_class_no;
+        const task_class_name = data.task_class_name;
+
+        if (!task_class_no || !task_class_name) {
             // 入力情報不正エラー
             console.error("パラメータエラー");
             return NextResponse.json(
@@ -62,7 +63,8 @@ export async function POST(request: NextRequest) {
         }
 
         // DB登録
-        resData = await sql`INSERT INTO task_class (task_class_no,task_class_name)
+        const resData =
+            await sql`INSERT INTO task_class (task_class_no,task_class_name)
         VALUES (${task_class_no},${task_class_name})
         RETURNING *`;
 
@@ -71,8 +73,7 @@ export async function POST(request: NextRequest) {
         console.error("Failed to fetch taskClass:", error);
         return NextResponse.json(
             { message: "Internal Server Error" },
-            { status: 500 });
-        
-        
+            { status: 500 }
+        );
     }
 }
