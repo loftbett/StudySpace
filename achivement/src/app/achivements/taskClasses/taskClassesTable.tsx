@@ -1,42 +1,20 @@
+"use client";
+
 import type { TaskClass, TaskClassesTableProps } from "@/types";
-
-// データ取得
-async function getTaskClass(
-    taskClassNo: string | null
-): Promise<TaskClass[]> {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    let query = "";
-    if (taskClassNo) {
-        query = `?`;
-    }
-    query += taskClassNo
-        ? `task_class_no=${encodeURIComponent(taskClassNo)}`
-        : "";
-
-    const res = await fetch(`${baseUrl}/api/taskClasses${query}`, {
-        cache: "no-store", // 開発中はキャッシュを無効化
-    });
-
-    if (!res.ok) {
-        // エラーハンドリング
-        console.error("Failed to fetch task_class:", res.statusText);
-        throw new Error("Failed to fetch task_class");
-    }
-    return res.json();
+import { useState, useEffect } from "react";
+interface Props {
+    task_class_no: string | null;
+    taskClasses: TaskClass[];
 }
 
-export default async function TaskClassesTable({
+export default function TaskClassesTable({
     task_class_no,
-}: TaskClassesTableProps) {
-    let taskClasses: TaskClass[] = [];
+    taskClasses: initialTaskClasses,
+}: Props) {
+    let taskClasses: TaskClass[] = initialTaskClasses;
     let error: string | null = null;
 
-    try {
-        taskClasses = await getTaskClass(task_class_no);
-    } catch (err) {
-        error = err instanceof Error ? err.message : "Unknown error";
-        console.error("Error fetching taskClasses in table component:", err);
-    }
+    const [editingTaskClassNo, setEditingTaskClassNo] = useState<number | null>(null);
 
     return (
         <>
@@ -49,7 +27,7 @@ export default async function TaskClassesTable({
                     <span className="block sm:inline"> {error}</span>
                 </div>
             )}
-            {taskClasses.length === 0 && !error ? (
+            {initialTaskClasses.length === 0 && !error ? (
                 <p className="text-gray-600">実績データがありません。</p>
             ) : (
                 <div className="mt-6 overflow-x-auto overflow-y-auto max-h-[70vh] bg-white shadow-md rounded-lg">
@@ -61,6 +39,9 @@ export default async function TaskClassesTable({
                                 </th>
                                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     タスク分類名
+                                </th>
+                                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    操作
                                 </th>
                             </tr>
                         </thead>
@@ -76,6 +57,8 @@ export default async function TaskClassesTable({
                                         <p className="text-gray-900 whitespace-no-wrap">
                                             {taskClass.task_class_name || "-"}
                                         </p>
+                                    </td>
+                                    <td  className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     </td>
                                 </tr>
                             ))}

@@ -35,6 +35,7 @@ export default async function TaskClassPage({
         const sP = await searchParams;
         taskClassNo = sP?.task_class_no || "";
     }
+    const taskClasses = await getTaskClasses(taskClassNo);
 
     return (
         <div className="container mx-auto p-4">
@@ -53,7 +54,7 @@ export default async function TaskClassPage({
                 {/* 検索フォーム */}
                 <SearchForm initialTaskClassNo={taskClassNo} />
                 
-                <TaskClassesTable task_class_no={taskClassNo} />
+                <TaskClassesTable task_class_no={taskClassNo} taskClasses={taskClasses} />
             </Suspense>
         </div>
     );

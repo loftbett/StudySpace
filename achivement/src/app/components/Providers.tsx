@@ -34,10 +34,6 @@ const Providers: React.FC<ProviderProps> = ({ children }) => {
             <main
                 className={clsx(
                     "flex-grow p-1",
-                    // large screenでサイドバーを開いている場合
-                    "lg:ml-64",
-                    //サイドバーが開いているときにコンテンツに重ならないように調整
-                    isSidebarOpen && "lg:ml-64"
                 )}
             >
                 <div className="pt-16 lg:pt-0">{children}</div>
