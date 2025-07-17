@@ -1,13 +1,7 @@
-interface TaskClass {
-    task_class_no: number;
-    task_class_name: string;
-}
+import type { TaskClass, TaskClassesTableProps } from "@/types";
 
-interface TaskClassesTableProps {
-    task_class_no: string | null;
-}
-
-async function getAllTaskClass(
+// データ取得
+async function getTaskClass(
     taskClassNo: string | null
 ): Promise<TaskClass[]> {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -30,6 +24,7 @@ async function getAllTaskClass(
     }
     return res.json();
 }
+
 export default async function TaskClassesTable({
     task_class_no,
 }: TaskClassesTableProps) {
@@ -37,7 +32,7 @@ export default async function TaskClassesTable({
     let error: string | null = null;
 
     try {
-        taskClasses = await getAllTaskClass(task_class_no);
+        taskClasses = await getTaskClass(task_class_no);
     } catch (err) {
         error = err instanceof Error ? err.message : "Unknown error";
         console.error("Error fetching taskClasses in table component:", err);

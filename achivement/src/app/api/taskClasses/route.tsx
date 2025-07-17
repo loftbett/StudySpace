@@ -77,3 +77,44 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+// 更新
+export async function PUT(request: NextRequest) {
+    try {
+        const data = await request.json();
+        const { task_class_no, task_class_name } = data;
+
+        //　パラメータチェック
+        if (!task_class_no || !task_class_name) {
+            return NextResponse.json(
+                { message: "タスク分類Noかタスク分類名が指定されていません。" },
+                { status: 400 }
+            );
+        }
+
+        // DB更新
+        const result = await sql`
+        UPDATE task_class 
+        SET task_class_no = ${task_class_no}, task_class_name = ${task_class_name}
+        WHERE task_class_no = ${task_class_no}
+        RETURNING *`;
+
+        if (result.count === 0) {
+            return NextResponse.json(
+                { message: "更新対象のデータが見つかりません。" }
+                , { status: 404 }
+            )
+        }
+        return NextResponse.json(result);
+
+    } catch (error) {
+        console.error("Failed to update task_class:", error);
+        return NextResponse.json(
+            { message: "Internal Server Error" },
+            { status: 500 }
+        )
+    }
+
+
+}
+

@@ -2,12 +2,29 @@ import { Suspense } from "react";
 import SearchForm from "../../components/SearchForm";
 import TaskClassesTable from "./taskClassesTable";
 import Link from "next/link";
+import type { TaskClass, TaskClassPagesProps } from "@/types";
 
-interface TaskClassPagesProps {
-    searchParams?: Promise<{
-        task_class_no?: string;
-    }>;
-}
+async function getTaskClasses(
+    taskClassNo: string | null): Promise<TaskClass[]> {
+        // APIルートのURLを構築
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const url = new URL(`${baseUrl}/api/taskClasses`);
+        if(taskClassNo) {
+            url.searchParams.append("task_class_no", taskClassNo);
+        }
+
+        const res = await fetch(url.toString(), {
+            cache: "no-store", // 常に最新データ取得
+        });
+
+        if(!res.ok) {
+            // エラーハンドリング
+            console.error("Failed to fetch task_class:", res.statusText);
+            throw new Error("タスク分類データの取得に失敗しました。");
+        }
+        return res.json();
+    }
+
 
 export default async function TaskClassPage({
     searchParams,
@@ -18,6 +35,7 @@ export default async function TaskClassPage({
         const sP = await searchParams;
         taskClassNo = sP?.task_class_no || "";
     }
+
     return (
         <div className="container mx-auto p-4">
             <div className="flex justify-between items-center mb-6">
