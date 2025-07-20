@@ -54,7 +54,7 @@ export default async function TaskClassPage({
                 {/* 検索フォーム */}
                 <SearchForm initialTaskClassNo={taskClassNo} />
                 
-                <TaskClassesTable task_class_no={taskClassNo} taskClasses={taskClasses} />
+                <TaskClassesTable taskClasses={taskClasses} />
             </Suspense>
         </div>
     );
