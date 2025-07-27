@@ -8,6 +8,7 @@ GRANT USAGE ON SCHEMA pg_catalog to loftbett;
 
 ALTER ROLE loftbett IN DATABASE achivement_management SET search_path TO public;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION tablefunc;
 
--- ERから各テーブルを作成した後
 
