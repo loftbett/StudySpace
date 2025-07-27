@@ -14,7 +14,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ isOpen, onToggle }) => {
     return (
         <button
             onClick={onToggle}
-            className="fixed top-4 left-4 z-50 p-2 rounded-md bg-blue-500 text-white shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="fixed top-4 left-4 z-50 p-2 sm:hidden rounded-md bg-blue-500 text-white shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
         >
             {isOpen ? (

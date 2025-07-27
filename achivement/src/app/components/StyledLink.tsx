@@ -9,16 +9,19 @@ interface StyledLinkProps {
     href: string;
     children: React.ReactNode;
     className?: string;
+    onClick?: () => void;
 }
 
 export default function StyledLink({
     href,
     children,
     className,
+    onClick,
 }: StyledLinkProps) {
     return (
         <Link
             href={href}
+            onClick={onClick}
             className={clsx(
                 "rounded-full", //
                 "border",

@@ -72,7 +72,9 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error("Failed to fetch taskClass:", error);
         return NextResponse.json(
-            { message: "Internal Server Error" },
+            { message: error instanceof Error
+                    ? error.message
+                    : "予期せぬエラーが発生しました。" },
             { status: 500 }
         );
     }

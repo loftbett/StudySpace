@@ -33,7 +33,7 @@ const Providers: React.FC<ProviderProps> = ({ children }) => {
             {/* メインコンテンツ */}
             <main
                 className={clsx(
-                    "flex-grow p-1",
+                    "flex-grow p-1 sm:ml-64",
                 )}
             >
                 <div className="pt-16 lg:pt-0">{children}</div>
